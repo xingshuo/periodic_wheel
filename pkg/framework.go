@@ -48,7 +48,7 @@ func (self *PeriodicWheel) PushDayFilter(key string, hour int, onTickFn func(int
 	f := &tickFilter{
 		getNextTickTime: getNextTmFn,
 		onTick:          onTickFn,
-		nextTickTime:    getNextTmFn(time.Unix(0, 0)),
+		nextTickTime:    getNextTmFn(time.Time{}),
 	}
 	self.filters[key] = f
 	return self.queue.push(f)
@@ -76,7 +76,7 @@ func (self *PeriodicWheel) PushWeekFilter(key string, weekday, hour int, onTickF
 	f := &tickFilter{
 		getNextTickTime: getNextTmFn,
 		onTick:          onTickFn,
-		nextTickTime:    getNextTmFn(time.Unix(0, 0)),
+		nextTickTime:    getNextTmFn(time.Time{}),
 	}
 	self.filters[key] = f
 	return self.queue.push(f)
@@ -104,12 +104,13 @@ func (self *PeriodicWheel) PushMonthFilter(key string, day, hour int, onTickFn f
 	f := &tickFilter{
 		getNextTickTime: getNextTmFn,
 		onTick:          onTickFn,
-		nextTickTime:    getNextTmFn(time.Unix(0, 0)),
+		nextTickTime:    getNextTmFn(time.Time{}),
 	}
 	self.filters[key] = f
 	return self.queue.push(f)
 }
 
+// 用户自定义过期规则
 func (self *PeriodicWheel) PushCustomizedFilter(key string, getNextTmFn func(time.Time) int64, onTickFn func(int64)) error {
 	oldf := self.filters[key]
 	if oldf != nil {
@@ -118,7 +119,7 @@ func (self *PeriodicWheel) PushCustomizedFilter(key string, getNextTmFn func(tim
 	f := &tickFilter{
 		getNextTickTime: getNextTmFn,
 		onTick:          onTickFn,
-		nextTickTime:    getNextTmFn(time.Unix(0, 0)),
+		nextTickTime:    getNextTmFn(time.Time{}),
 	}
 	self.filters[key] = f
 	return self.queue.push(f)
