@@ -82,10 +82,10 @@ func (self *PeriodicWheel) PushWeekFilter(key string, weekday, hour int, onTickF
 	return self.queue.push(f)
 }
 
-// day: 1 ~ 28
+// day: 1 ~ 28 or -1 ~ -28
 // hour: 0 ~ 23
 func (self *PeriodicWheel) PushMonthFilter(key string, day, hour int, onTickFn func(int64)) error {
-	if day <= 0 || day > 28 {
+	if !(1 <= day && day <= 28) && !(-28 <= day && day <= -1) {
 		return fmt.Errorf("day param fmt err")
 	}
 	if hour < 0 || hour > 23 {
