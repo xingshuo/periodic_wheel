@@ -102,7 +102,7 @@ func NewHeapq(cap int) *Heapq {
 	q := &Heapq{
 		size: 0,
 		cap:  cap,
-		data: make([]*tickFilter, cap),
+		data: make([]*tickFilter, cap+1),
 	}
 	return q
 }
